@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;title&gt;Still Breathing Anchor&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;style&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* --- CSS Variables &amp; Reset --- */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>:root {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--teal: #006D77;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--linen: #FDFCF0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--box-size: 240px; /* Adjusted size for good mobile visibility */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--dot-size: 16px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>/* Default cycle time (will be updated by JS) */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--cycle-time: 16s;<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Prevents the "bounce" scroll effect on mobile web views */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>html, body {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>margin: 0; padding: 0; width: 100%; height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: var(--linen); /* Native background match */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>overflow: hidden; position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>color: var(--teal);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>display: flex; flex-direction: column; align-items: center; justify-content: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>transition: opacity 0.5s ease;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* --- Setup Screen UI --- */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#setup-container {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>text-align: center; width: 80%; max-width: 300px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>display: flex; flex-direction: column; gap: 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>h1 { font-weight: 400; margin-bottom: 10px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>label { font-size: 14px; font-weight: 600; display: block; margin-bottom: 8px; text-align: left;}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>select {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>width: 100%; padding: 12px; border-radius: 8px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border: 1px solid var(--teal); background: var(--linen);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>color: var(--teal); font-size: 16px; -webkit-appearance: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.start-button {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: var(--teal); color: white;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border: none; padding: 16px; border-radius: 30px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>font-size: 16px; font-weight: 600; cursor: pointer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>margin-top: 10px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* --- Active Breathing UI --- */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#active-container {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>display: none; /* Hidden initially */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>flex-direction: column; align-items: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>opacity: 0; transition: opacity 1s ease;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.timer-display { font-size: 18px; margin-bottom: 30px; font-variant-numeric: tabular-nums;}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* The Breathing Box Container */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.box-container {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>width: var(--box-size); height: var(--box-size);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>position: relative;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border: 2px solid var(--teal); border-radius: 12px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>display: flex; justify-content: center; align-items: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* The Moving Dot Anchor */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.dot {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>width: var(--dot-size); height: var(--dot-size);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: var(--teal); border-radius: 50%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>position: absolute;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>/* Offsets to center the dot on the border line */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>top: calc(var(--dot-size) / -2); left: calc(var(--dot-size) / -2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>will-change: top, left;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>animation: moveAround var(--cycle-time) linear infinite;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>animation-play-state: paused; /* Paused until start */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* The Center Instruction Text */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.instruction-text {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>font-size: 20px; font-weight: 600; letter-spacing: 1px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>text-transform: uppercase;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>animation: textFade var(--cycle-time) linear infinite;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>animation-play-state: paused;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* --- Animations --- */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Keyframes defined based on box size and dot offset */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@keyframes moveAround {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>0% <span class="Apple-converted-space">  </span>{ top: -8px; left: -8px; } /* Top Left */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>25%<span class="Apple-converted-space">  </span>{ top: -8px; left: 232px; } /* Top Right (240 - 8) */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>50%<span class="Apple-converted-space">  </span>{ top: 232px; left: 232px; } /* Bottom Right */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>75%<span class="Apple-converted-space">  </span>{ top: 232px; left: -8px; } /* Bottom Left */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>100% { top: -8px; left: -8px; } /* Back to Start */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Subtle fade effect for the text during transitions */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@keyframes textFade {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>0%, 20% { opacity: 1; } 25%, 45% { opacity: 0.3; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>50%, 70% { opacity: 1; } 75%, 95% { opacity: 0.3; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>100% { opacity: 1; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* --- Completion State --- */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#completion-message { display: none; text-align: center; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="setup-container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h1&gt;Ready to anchor?&lt;/h1&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label for="rhythm-select"&gt;Choose your pace&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;select id="rhythm-select"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="16"&gt;Relaxed (4s per side)&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="24"&gt;Deep (6s per side)&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="32"&gt;Profound (8s per side)&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/select&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label for="duration-select"&gt;Set duration&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;select id="duration-select"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="60"&gt;1 Minute&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="180"&gt;3 Minutes&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="300"&gt;5 Minutes&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/select&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button class="start-button" onclick="startBreathing()"&gt;Begin Session&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="active-container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="timer-display" id="countdown"&gt;00:00&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="box-container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="dot" id="moving-dot"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="instruction-text" id="instruction"&gt;GET READY&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="completion-message"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h1&gt;You are centered.&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;p&gt;Return when you are ready.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// --- Variables ---</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>let totalTime;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>let cycleTime;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>let countdownInterval;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>let textInterval;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>let audioCtx;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const phases = ["Inhale", "Hold", "Exhale", "Pause"];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const setupCont = document.getElementById('setup-container');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const activeCont = document.getElementById('active-container');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const completeCont = document.getElementById('completion-message');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const dotEl = document.getElementById('moving-dot');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const textEl = document.getElementById('instruction');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const countdownEl = document.getElementById('countdown');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// --- Main Function: Start the Session ---</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function startBreathing() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// 1. Get user inputs</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>cycleTime = parseInt(document.getElementById('rhythm-select').value);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>totalTime = parseInt(document.getElementById('duration-select').value);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// 2. Update CSS variable for animation speed</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.documentElement.style.setProperty('--cycle-time', cycleTime + 's');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// 3. Switch UI with a smooth fade</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setupCont.style.opacity = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setTimeout(() =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>setupCont.style.display = 'none';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>activeCont.style.display = 'flex';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Trigger reflow for fade transition</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>void activeCont.offsetWidth;<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>activeCont.style.opacity = 1;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Start everything</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>runSession();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}, 500);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function runSession() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Start animations</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>dotEl.style.animationPlayState = 'running';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>textEl.style.animationPlayState = 'running';</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Initialize first phase instantly</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>textEl.innerText = phases[0];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>let phaseIndex = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const timePerSide = (cycleTime / 4) * 1000; // convert to ms</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Start text cycling interval</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>textInterval = setInterval(() =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>phaseIndex = (phaseIndex + 1) % phases.length;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>textEl.innerText = phases[phaseIndex];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}, timePerSide);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Start overall countdown timer</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>updateTimerDisplay(totalTime);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>countdownInterval = setInterval(() =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>totalTime--;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>updateTimerDisplay(totalTime);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if (totalTime &lt;= 0) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>endSession();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}, 1000);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// --- Helper: Format Timer (MM:SS) ---</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function updateTimerDisplay(seconds) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const m = Math.floor(seconds / 60).toString().padStart(2, '0');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const s = (seconds % 60).toString().padStart(2, '0');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>countdownEl.innerText = `${m}:${s}`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// --- End Session Logic ---</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function endSession() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>clearInterval(countdownInterval);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>clearInterval(textInterval);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>dotEl.style.animationPlayState = 'paused';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>textEl.style.animationPlayState = 'paused';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>playSoftChime(); // Play sound</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Fade out active, fade in completion</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>activeCont.style.opacity = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setTimeout(() =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>activeCont.style.display = 'none';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>completeCont.style.display = 'block';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}, 1000);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// --- Audio: Generate a soft synth chime ---</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function playSoftChime() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Create audio context only when needed (mobile browser requirement)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const oscillator = audioCtx.createOscillator();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const gainNode = audioCtx.createGain();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>oscillator.connect(gainNode);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gainNode.connect(audioCtx.destination);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// A peaceful sine wave tone at 440Hz (A4 note)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>oscillator.type = 'sine';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);<span class="Apple-converted-space"> </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Smooth fade in and long fade out for a "chime" effect</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gainNode.gain.setValueAtTime(0, audioCtx.currentTime);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.1); // Attack</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3); // Long Decay</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>oscillator.start();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>oscillator.stop(audioCtx.currentTime + 3);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
