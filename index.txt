@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Still Breathing Anchor</title>
+  <style>
+    /* --- CSS Variables & Reset --- */
+    :root {
+      --teal: #006D77;
+      --linen: #FDFCF0;
+      --box-size: 240px; /* Adjusted size for good mobile visibility */
+      --dot-size: 16px;
+      /* Default cycle time (will be updated by JS) */
+      --cycle-time: 16s; 
+    }
+
+    /* Prevents the "bounce" scroll effect on mobile web views */
+    html, body {
+      margin: 0; padding: 0; width: 100%; height: 100%;
+      background-color: var(--linen); /* Native background match */
+      overflow: hidden; position: fixed;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
+      color: var(--teal);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.5s ease;
+    }
+
+    /* --- Setup Screen UI --- */
+    #setup-container {
+      text-align: center; width: 80%; max-width: 300px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+
+    h1 { font-weight: 400; margin-bottom: 10px; }
+    label { font-size: 14px; font-weight: 600; display: block; margin-bottom: 8px; text-align: left;}
+
+    select {
+      width: 100%; padding: 12px; border-radius: 8px;
+      border: 1px solid var(--teal); background: var(--linen);
+      color: var(--teal); font-size: 16px; -webkit-appearance: none;
+    }
+
+    .start-button {
+      background-color: var(--teal); color: white;
+      border: none; padding: 16px; border-radius: 30px;
+      font-size: 16px; font-weight: 600; cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* --- Active Breathing UI --- */
+    #active-container {
+      display: none; /* Hidden initially */
+      flex-direction: column; align-items: center;
+      opacity: 0; transition: opacity 1s ease;
+    }
+
+    .timer-display { font-size: 18px; margin-bottom: 30px; font-variant-numeric: tabular-nums;}
+
+    /* The Breathing Box Container */
+    .box-container {
+      width: var(--box-size); height: var(--box-size);
+      position: relative;
+      border: 2px solid var(--teal); border-radius: 12px;
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    /* The Moving Dot Anchor */
+    .dot {
+      width: var(--dot-size); height: var(--dot-size);
+      background-color: var(--teal); border-radius: 50%;
+      position: absolute;
+      /* Offsets to center the dot on the border line */
+      top: calc(var(--dot-size) / -2); left: calc(var(--dot-size) / -2);
+      will-change: top, left;
+      animation: moveAround var(--cycle-time) linear infinite;
+      animation-play-state: paused; /* Paused until start */
+    }
+
+    /* The Center Instruction Text */
+    .instruction-text {
+      font-size: 20px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase;
+      animation: textFade var(--cycle-time) linear infinite;
+      animation-play-state: paused;
+    }
+
+    /* --- Animations --- */
+    /* Keyframes defined based on box size and dot offset */
+    @keyframes moveAround {
+      0%   { top: -8px; left: -8px; } /* Top Left */
+      25%  { top: -8px; left: 232px; } /* Top Right (240 - 8) */
+      50%  { top: 232px; left: 232px; } /* Bottom Right */
+      75%  { top: 232px; left: -8px; } /* Bottom Left */
+      100% { top: -8px; left: -8px; } /* Back to Start */
+    }
+
+    /* Subtle fade effect for the text during transitions */
+    @keyframes textFade {
+       0%, 20% { opacity: 1; } 25%, 45% { opacity: 0.3; }
+       50%, 70% { opacity: 1; } 75%, 95% { opacity: 0.3; }
+       100% { opacity: 1; }
+    }
+
+    /* --- Completion State --- */
+    #completion-message { display: none; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <div id="setup-container">
+    <h1>Ready to anchor?</h1>
+    
+    <div>
+      <label for="rhythm-select">Choose your pace</label>
+      <select id="rhythm-select">
+        <option value="16">Relaxed (4s per side)</option>
+        <option value="24">Deep (6s per side)</option>
+        <option value="32">Profound (8s per side)</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="duration-select">Set duration</label>
+      <select id="duration-select">
+        <option value="60">1 Minute</option>
+        <option value="180">3 Minutes</option>
+        <option value="300">5 Minutes</option>
+      </select>
+    </div>
+
+    <button class="start-button" onclick="startBreathing()">Begin Session</button>
+  </div>
+
+
+  <div id="active-container">
+    <div class="timer-display" id="countdown">00:00</div>
+    
+    <div class="box-container">
+      <div class="dot" id="moving-dot"></div>
+      <div class="instruction-text" id="instruction">GET READY</div>
+    </div>
+  </div>
+
+  <div id="completion-message">
+    <h1>You are centered.</h1>
+    <p>Return when you are ready.</p>
+  </div>
+
+
+  <script>
+    // --- Variables ---
+    let totalTime;
+    let cycleTime;
+    let countdownInterval;
+    let textInterval;
+    let audioCtx;
+
+    const phases = ["Inhale", "Hold", "Exhale", "Pause"];
+    const setupCont = document.getElementById('setup-container');
+    const activeCont = document.getElementById('active-container');
+    const completeCont = document.getElementById('completion-message');
+    const dotEl = document.getElementById('moving-dot');
+    const textEl = document.getElementById('instruction');
+    const countdownEl = document.getElementById('countdown');
+
+    // --- Main Function: Start the Session ---
+    function startBreathing() {
+      // 1. Get user inputs
+      cycleTime = parseInt(document.getElementById('rhythm-select').value);
+      totalTime = parseInt(document.getElementById('duration-select').value);
+
+      // 2. Update CSS variable for animation speed
+      document.documentElement.style.setProperty('--cycle-time', cycleTime + 's');
+
+      // 3. Switch UI with a smooth fade
+      setupCont.style.opacity = 0;
+      setTimeout(() => {
+        setupCont.style.display = 'none';
+        activeCont.style.display = 'flex';
+        // Trigger reflow for fade transition
+        void activeCont.offsetWidth; 
+        activeCont.style.opacity = 1;
+        
+        // Start everything
+        runSession();
+      }, 500);
+    }
+
+
+    function runSession() {
+      // Start animations
+      dotEl.style.animationPlayState = 'running';
+      textEl.style.animationPlayState = 'running';
+
+      // Initialize first phase instantly
+      textEl.innerText = phases[0];
+      let phaseIndex = 0;
+      const timePerSide = (cycleTime / 4) * 1000; // convert to ms
+
+      // Start text cycling interval
+      textInterval = setInterval(() => {
+        phaseIndex = (phaseIndex + 1) % phases.length;
+        textEl.innerText = phases[phaseIndex];
+      }, timePerSide);
+
+      // Start overall countdown timer
+      updateTimerDisplay(totalTime);
+      countdownInterval = setInterval(() => {
+        totalTime--;
+        updateTimerDisplay(totalTime);
+
+        if (totalTime <= 0) {
+          endSession();
+        }
+      }, 1000);
+    }
+
+    // --- Helper: Format Timer (MM:SS) ---
+    function updateTimerDisplay(seconds) {
+      const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const s = (seconds % 60).toString().padStart(2, '0');
+      countdownEl.innerText = `${m}:${s}`;
+    }
+
+    // --- End Session Logic ---
+    function endSession() {
+      clearInterval(countdownInterval);
+      clearInterval(textInterval);
+      dotEl.style.animationPlayState = 'paused';
+      textEl.style.animationPlayState = 'paused';
+      
+      playSoftChime(); // Play sound
+
+      // Fade out active, fade in completion
+      activeCont.style.opacity = 0;
+      setTimeout(() => {
+          activeCont.style.display = 'none';
+          completeCont.style.display = 'block';
+      }, 1000);
+    }
+
+    // --- Audio: Generate a soft synth chime ---
+    function playSoftChime() {
+        // Create audio context only when needed (mobile browser requirement)
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        // A peaceful sine wave tone at 440Hz (A4 note)
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); 
+        
+        // Smooth fade in and long fade out for a "chime" effect
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.1); // Attack
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3); // Long Decay
+
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 3);
+    }
+  </script>
+</body>
+</html>
